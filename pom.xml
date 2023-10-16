@@ -9,7 +9,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.cydeo</groupId>
-    <artifactId>stream-practice</artifactId>
+    <artifactId>StreamPractice</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>stream-practice</name>
     <description>stream-practice</description>
