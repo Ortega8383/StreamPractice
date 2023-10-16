@@ -4,10 +4,7 @@ import com.cydeo.streampractice.model.*;
 import com.cydeo.streampractice.service.*;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Component
@@ -131,7 +128,7 @@ public class Practice {
         //TODO Implement the method
         return departmentService.readAll().stream()
                 .filter(p -> p.getDepartmentName().equals("IT"))
-                .findFirst().orElseThrow( () -> new Exception ("No department found"))
+                .findFirst().orElseThrow(() -> new Exception("No department found"))
                 .getLocation().getCountry().getRegion();
 
 //                return departmentService.readAll().stream()
@@ -211,19 +208,63 @@ public class Practice {
 
     // Display the maximum salary an employee gets
     public static Long getMaxSalary() throws Exception {
-        return 1L;
+        return employeeService.readAll().stream()
+                .max(Comparator.comparing(p -> p.getSalary()))
+                .get().getSalary();
+
+//        return employeeService.readAll().stream()
+//                .map(Employee::getSalary)
+//                .reduce(Long::max)
+//                .get();
+
+
+//        return employeeService.readAll().stream()
+//                .sorted(Comparator.comparing(Employee::getSalary).reversed())
+//                .findFirst().get().getSalary();
+//
+//        return employeeService.readAll().stream()
+//                .sorted(Comparator.comparing(Employee::getSalary).reversed())
+//                .limit(1).collect(Collectors.toList()).get(0).getSalary();
+//
+//
+//        return employeeService.readAll().stream()
+//                .map(Employee::getSalary)
+//                .reduce((salary1, salary2) -> salary1 > salary2 ? salary1 : salary2)
+//                .get();
+//
+//        return employeeService.readAll().stream()
+//                .map(Employee::getSalary)
+//                .collect(Collectors.maxBy(Comparator.comparing(Long::longValue))).get();
+//
+//        return employeeService.readAll().stream()
+//                .collect((Collectors.maxBy(Comparator.comparing(Employee::getSalary)))).get().getSalary();
+
+//        return employeeService.readAll().stream()
+//                .mapToLong(Employee::getSalary)
+//                .max().getAsLong();
+
     }
 
     // Display the employee(s) who gets the maximum salary
     public static List<Employee> getMaxSalaryEmployee() {
         //TODO Implement the method
-        return new ArrayList<>();
+        Long a = employeeService.readAll().stream()
+                .map(Employee::getSalary).reduce(Long::max).get();
+
+        return employeeService.readAll().stream()
+                .filter(p -> Objects.equals(p.getSalary(), a)).collect(Collectors.toList());
     }
 
     // Display the max salary employee's job
     public static Job getMaxSalaryEmployeeJob() throws Exception {
         //TODO Implement the method
-        return new Job();
+        Long a = employeeService.readAll().stream()
+                .map(Employee::getSalary).reduce(Long::max).get();
+
+        return employeeService.readAll().stream()
+                .filter(p -> Objects.equals(p.getSalary(), a)).map(Employee::getJob).collect(Collectors.toList()).get(0);
+
+//        return getMaxSalaryEmployee().get(0).getJob();
     }
 
     // Display the max salary in Americas Region
