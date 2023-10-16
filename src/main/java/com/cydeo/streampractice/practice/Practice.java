@@ -184,13 +184,29 @@ public class Practice {
     // Display all the employees whose salary is between 6000 and 7000
     public static List<Employee> getAllEmployeesSalaryBetween() {
         //TODO Implement the method
-        return new ArrayList<>();
+        return employeeService.readAll().stream()
+                .filter(p -> p.getSalary() > 6000 && p.getSalary() < 7000).collect(Collectors.toList()); // FASTER TO PERFORM
+
+
+//        return employeeService.readAll().stream()    // BETTER TO READ
+//                .filter(p -> p.getSalary() > 6000 )
+//                .filter(p -> p.getSalary() < 7000)
+//                .collect(Collectors.toList());
+
     }
 
     // Display the salary of the employee Grant Douglas (lastName: Grant, firstName: Douglas)
     public static Long getGrantDouglasSalary() throws Exception {
         //TODO Implement the method
-        return 1L;
+        return employeeService.readAll().stream()
+                .filter(p -> p.getFirstName().equals("Douglas") && p.getLastName().equals("Grant"))
+                .map(Employee::getSalary)
+                .findFirst()
+                .orElseThrow(() -> new Exception("Douglas Grant not found"));
+
+//        return employeeService.readAll().stream()
+//                .filter(p -> p.getFirstName().equals("Douglas") && p.getLastName().equals("Grant"))
+//                .findFirst().orElseThrow(() -> new Exception("Douglas Grant not found")).getSalary();
     }
 
     // Display the maximum salary an employee gets
