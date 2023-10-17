@@ -197,15 +197,15 @@ public class Practice {
     // Display the salary of the employee Grant Douglas (lastName: Grant, firstName: Douglas)
     public static Long getGrantDouglasSalary() throws Exception {
         //TODO Implement the method
-        return employeeService.readAll().stream()
-                .filter(p -> p.getFirstName().equals("Douglas") && p.getLastName().equals("Grant"))
-                .map(Employee::getSalary)
-                .findFirst()
-                .orElseThrow(() -> new Exception("Douglas Grant not found"));
-
 //        return employeeService.readAll().stream()
 //                .filter(p -> p.getFirstName().equals("Douglas") && p.getLastName().equals("Grant"))
-//                .findFirst().orElseThrow(() -> new Exception("Douglas Grant not found")).getSalary();
+//                .map(Employee::getSalary)
+//                .findFirst()
+//                .orElseThrow(() -> new Exception("Douglas Grant not found"));
+
+        return employeeService.readAll().stream()
+                .filter(p -> p.getFirstName().equals("Douglas") && p.getLastName().equals("Grant"))
+                .findFirst().orElseThrow(() -> new Exception("Douglas Grant not found")).getSalary();
     }
 
     // Display the maximum salary an employee gets
